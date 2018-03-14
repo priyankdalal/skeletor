@@ -70,10 +70,17 @@ var Skeletor={
             }
             if(bones[level].node.hasOwnProperty("id"))
                 html+=" id=\""+ bones[level].node.id+ "\"";
-            html+=">\n";
-            html+=Skeletor.createJoints(bones,spaces,level+1);
-            html+=space+ "</"+ bones[level].node.tag+ ">\n";
-            html=html.repeat(bones[level].count);
+            if(Joints.isClosed(bones[level].node.tag)){
+                html+=">\n";
+                html+=Skeletor.createJoints(bones,spaces,level+1);
+                html+=space+ "</"+ bones[level].node.tag+ ">\n";
+                html=html.repeat(bones[level].count);
+            }else{
+                html+=" />\n";
+                html=html.repeat(bones[level].count);
+                spaces-=4;
+                html+=Skeletor.createJoints(bones,spaces,level+1);
+            }
             if(level==0) html=html.trimRight()
         }
         return html;
@@ -92,3 +99,121 @@ var Skeletor={
         return joints;
     }
 };
+var Joints=new function(){
+    var joint={
+        html:{
+            type:"block",
+            close:true,
+        },
+        head:{
+            type:"block",
+            close:true,
+        },
+        title:{
+            type:"inline",
+            close:true,
+        },
+        meta:{
+            type:"inline",
+            close:false,
+        },
+        link:{
+            type:"inline",
+            close:false,
+        },
+        script:{
+            type:"block",
+            close:true,
+        },
+        body:{
+            type:"block",
+            close:true,
+        },
+        section:{
+            type:"block",
+            close:true,
+        },
+        nav:{
+            type:"block",
+            close:true,
+        },
+        header:{
+            type:"block",
+            close:true,
+        },
+        footer:{
+            type:"block",
+            close:true,
+        },
+        div:{
+            type:"block",
+            close:true,
+        },
+        pre:{
+            type:"block",
+            close:true,
+        },
+        p:{
+            type:"block",
+            close:true,
+        },
+        ul:{
+            type:"block",
+            close:true,
+        },
+        ol:{
+            type:"block",
+            close:true,
+        },
+        table:{
+            type:"block",
+            close:true,
+        },
+        tr:{
+            type:"block",
+            close:true,
+        },
+        select:{
+            type:"block",
+            close:true,
+        },
+        option:{
+            type:"inline",
+            close:true,
+        },
+        span:{
+            type:"inline",
+            close:true,
+        },
+        li:{
+            type:"inline",
+            close:true,
+        },
+        td:{
+            type:"inline",
+            close:true,
+        },
+        th:{
+            type:"inline",
+            close:true,
+        },
+        input:{
+            type:"inline",
+            close:false,
+        },
+        br:{
+            type:"inline",
+            close:false,
+        },
+        hr:{
+            type:"inline",
+            close:false,
+        }
+    };
+    this.isBlock=function(tag){
+        return (!!joint[tag] && joint[tag].type=="block")?true:false;
+    };
+    this.isClosed=function(tag){
+        return (!!joint[tag])?joint[tag].close:false;
+    };
+}
