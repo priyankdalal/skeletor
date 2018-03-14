@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Skeletor Test</title>
+        <script src="skeletor.js"></script>
+    </head>
+    <body>
+        <div>
+            <form>
+                <fieldset>
+                    <legend>Enter input and click</legend>
+                    <input type="text" id="input" style="width:400px" />
+                    <input type="button" value="Get Html" onclick="gethtml();" />
+                </fieldset>
+            </form>
+        </div>
+        <div>
+            <form>
+                <fieldset>
+                    <legend>Enter input and click</legend>
+                    <textarea id="output" cols="50" rows="25">
+                    </textarea>
+                </fieldset>
+            </form>
+        </div>
+        <script>
+            function gethtml(){
+                var inp=document.getElementById("input").value;
+                if(!inp) document.getElementById("output").value="No Input detected";
+                document.getElementById("output").value=Skeletor.createSkeleton(inp);
+            }
+        </script>
+    </body>
+</html>
